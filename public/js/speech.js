@@ -11,9 +11,12 @@ window.onload = function() {
     });
 
     recognition.onresult = function(event) {
-        const spokenWord = event.results[0][0].transcript;
+        const spokenWord = event.results[0][0].transcript.trim().toUpperCase();
         document.getElementById('result').textContent = "Vous avez dit : " + spokenWord;
-    
+
+        // Récupérer la lettre actuelle depuis localStorage
+        const currentLetter = localStorage.getItem("currentLetter") || "A";
+
         fetch('/attempt', {
             method: 'POST',
             headers: {
@@ -22,8 +25,8 @@ window.onload = function() {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                letter: "A",  // À remplacer dynamiquement
-                success: spokenWord.toLowerCase() === "a"
+                letter: currentLetter,
+                success: spokenWord.toLowerCase() === currentLetter.toLowerCase()
             })
         })
         .then(response => {
@@ -32,7 +35,7 @@ window.onload = function() {
             }
             return response.json();
         })
-        .then(data => console.log(data))
+        .then(data => console.log("Saved:", data))
         .catch(error => console.error('Error:', error));
     };
 

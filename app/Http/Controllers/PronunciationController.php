@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PronunciationAttempt;
+use App\Models\Letter;
 
 class PronunciationController extends Controller
 {
@@ -25,4 +26,13 @@ class PronunciationController extends Controller
             'data' => $attempt
         ]);
     }
+
+
+
+    public function getRandomLetter()
+    {
+        $letter = Letter::inRandomOrder()->first();
+        return response()->json(['letter' => $letter->letter]);
+    }
+
 }
