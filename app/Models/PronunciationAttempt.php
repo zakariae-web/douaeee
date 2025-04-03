@@ -9,7 +9,7 @@ class PronunciationAttempt extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'letter', 'success'];
+    protected $fillable = ['user_id', 'letter', 'success', 'attempted_word'];
 
     public function user()
     {

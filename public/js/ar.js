@@ -124,42 +124,46 @@ document.getElementById("start").addEventListener("click", () => {
     recognition.start();
 });
 
-recognition.onresult = function (event) {
-    const spokenWord = event.results[0][0].transcript.trim().toUpperCase();
-    document.getElementById("result").innerText = "You said: " + spokenWord;
 
-    if (spokenWord === currentLetter) {
-        document.getElementById("result").innerText += " ✅ Correct!";
-        saveAttempt(currentLetter, true);
-
-        // Chargement de la lettre suivante après 1 seconde
-        setTimeout(() => {
-            currentLetter = getNextLetter();
-            loadLetter(currentLetter);
-        }, 1000);
-    } else {
-        document.getElementById("result").innerText += " ❌ Try again.";
-        saveAttempt(currentLetter, false);
-    }
-};
 
 let letters = [];
 
 async function fetchLetters() {
     try {
         const response = await fetch('/letters');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
         letters = await response.json();
+        console.log("Lettres disponibles :", letters);
+        
+        if (letters.length > 0) {
+            currentLetter = getNextLetter();
+            // Émettre l'événement initial
+            window.dispatchEvent(new CustomEvent("updateLetter", { 
+                detail: { letter: currentLetter } 
+            }));
+        }
+    } catch (error) {
+        console.error("Erreur de chargement :", error);
+        // Fallback avec lettres par défaut
+        letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
+                 'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         currentLetter = getNextLetter();
         loadLetter(currentLetter);
-    } catch (error) {
-        console.error("Erreur lors du chargement des lettres:", error);
     }
 }
 
 function getNextLetter() {
-    if (letters.length === 0) return "A";  
-    let nextLetter = letters[Math.floor(Math.random() * letters.length)];
-    localStorage.setItem("currentLetter", nextLetter);
+    if (letters.length === 0) {
+        console.error("Aucune lettre disponible, retour à A");
+        return "A";
+    }
+    
+    // Sélection aléatoire robuste
+    const randomIndex = Math.floor(Math.random() * letters.length);
+    const nextLetter = letters[randomIndex];
+    
+    console.log("Prochaine lettre :", nextLetter);
     return nextLetter;
 }
 
@@ -167,7 +171,7 @@ function getNextLetter() {
 fetchLetters();
 
 // 📝 Enregistrement des tentatives dans Laravel
-function saveAttempt(letter, success) {
+function saveAttempt(letter, spokenWord, success) {
     fetch('/attempt', {
         method: 'POST',
         headers: {
@@ -176,6 +180,7 @@ function saveAttempt(letter, success) {
         },
         body: JSON.stringify({
             letter: letter,
+            attempted_word: spokenWord, // Utilisation correcte du paramètre
             success: success
         }),
         credentials: 'include'
@@ -183,6 +188,46 @@ function saveAttempt(letter, success) {
       .then(data => console.log("Saved:", data))
       .catch(error => console.error("Error:", error));
 }
+
+// Supprimez la version dupliquée et gardez cette seule version
+recognition.onresult = function(event) {
+    const spokenWord = event.results[0][0].transcript.trim().toUpperCase();
+    document.getElementById("result").innerText = "You said: " + spokenWord;
+
+    const isCorrect = spokenWord === currentLetter;
+    
+    // Mise à jour correcte des paramètres
+    saveAttempt(currentLetter, spokenWord, isCorrect);
+
+    if (isCorrect) {
+        document.getElementById("result").innerText += "Correct!";
+        setTimeout(() => {
+            currentLetter = getNextLetter();
+            // Émettre l'événement avec la nouvelle lettre
+            window.dispatchEvent(new CustomEvent("updateLetter", { 
+                detail: { letter: currentLetter } 
+            }));
+        }, 1000);
+    } else {
+        document.getElementById("result").innerText += "Try again.";
+    }
+};
+window.addEventListener("updateLetter", (event) => {
+    const newLetter = event.detail.letter; // Accès correct à la propriété
+    console.log("Nouvelle lettre reçue :", newLetter);
+    
+    // Mise à jour de la variable globale
+    currentLetter = newLetter;
+    
+    // Chargement de la lettre
+    loadLetter(newLetter);
+    
+    // Mise à jour du localStorage si nécessaire
+    localStorage.setItem("currentLetter", newLetter);
+    console.log("Lettre actuelle enregistrée:", newLetter);
+
+});
+
 
 // 🎬 Boucle d'animation (sans rotation)
 function animate() {

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PronunciationController;
 use App\Models\PronunciationAttempt;
 use App\Models\Letter;
@@ -22,7 +23,7 @@ Route::get('/', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/jeu', function () {return view('game.index');})->name('jeu');
 Route::post('/verify-pronunciation', function (Request $request) {
-    $expectedWord = 'A'; // À remplacer dynamiquement
+    $expectedWord = Session::get('currentLetter', 'A');
     $spokenWord = $request->input('word');
 
     return response()->json([
