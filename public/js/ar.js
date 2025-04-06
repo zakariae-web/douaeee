@@ -228,6 +228,32 @@ window.addEventListener("updateLetter", (event) => {
 
 });
 
+window.addEventListener("keydown", function (event) {
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.code)) {
+        event.preventDefault(); // Bloquer le scrolling de la page
+    }
+});
+
+document.addEventListener("keydown", function (event) {
+    const speed = 0.5; // Vitesse de déplacement
+
+    switch (event.code) {
+        case "ArrowUp":
+            camera.position.z -= speed;
+            break;
+        case "ArrowDown":
+            camera.position.z += speed;
+            break;
+        case "ArrowLeft":
+            camera.position.x -= speed;
+            break;
+        case "ArrowRight":
+            camera.position.x += speed;
+            break;
+    }
+});
+
+
 
 // 🎬 Boucle d'animation (sans rotation)
 function animate() {
