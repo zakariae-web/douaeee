@@ -5,10 +5,11 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <div class="game-container">
-        <h2>Prononcez la lettre affichée</h2>
-        <div id="ar-container" style="width: 600px; height: 400px; border: 1px solid black;"></div>
-        <button id="start">Dites la lettre</button>
+        <p id="instruction"></p>
+        <button class="mx-auto btn btn-success mb-3" id="start">Dites la lettre</button>
+        <div id="ar-container" style="width: 100%; height: 60vh; border: 1px solid black;"></div>  
         <p id="result"></p>
+        <button class="mx-auto btn btn-warning mt-3" id="skip">Passer cette lettre</button>
     </div>
 
     

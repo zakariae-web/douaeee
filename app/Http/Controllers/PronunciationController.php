@@ -12,49 +12,47 @@ class PronunciationController extends Controller
     {
         $validated = $request->validate([
             'letter' => 'required|string|max:1',
-            'attempted_word' => 'required|string',
-            'success' => 'required|boolean'
+            'attempted_word' => 'nullable|string',
+            'success' => 'required|boolean',
+            'skipped' => 'nullable|boolean'
         ]);
-    
+
+        $skipped = $validated['skipped'] ?? false;
+
         $attempt = PronunciationAttempt::create([
             'user_id' => auth()->id(),
             'letter' => $validated['letter'],
-            'attempted_word' => $validated['attempted_word'],
-            'success' => $validated['success']
+            'attempted_word' => $validated['attempted_word'] ?? null,
+            'success' => $validated['success'],
+            'skipped' => $skipped
         ]);
-    
-        if ($validated['success']) {
-            // Nouvelle lettre
+
+        // Générer une nouvelle lettre uniquement si succès ou skip
+        if ($validated['success'] || $skipped) {
             $newLetter = Letter::inRandomOrder()->first()->letter;
-            
-            // 🔴 FORCER LA MISE À JOUR DE LA SESSION
+
             session(['currentLetter' => $newLetter]);
-            session()->save(); // <- Cette ligne force l'enregistrement de la session
-    
+            session()->save();
+
             return response()->json([
-                'message' => 'Attempt saved successfully',
+                'message' => $skipped ? 'Lettre skippée.' : 'Tentative réussie.',
                 'newLetter' => $newLetter,
                 'data' => $attempt
             ]);
         }
-    
+
         return response()->json([
-            'message' => 'Attempt saved successfully',
+            'message' => 'Tentative enregistrée.',
             'data' => $attempt
         ]);
     }
-    
-    
-    
-
-
 
     public function getRandomLetter()
     {
         $letter = Letter::inRandomOrder()->first();
-        session(['currentLetter' => $letter->letter]); // Stocker en session
+        session(['currentLetter' => $letter->letter]);
         return response()->json(['letter' => $letter->letter]);
     }
-    
+
 
 }

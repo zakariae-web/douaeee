@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function pronunciationAttempts()
+{
+    return $this->hasMany(PronunciationAttempt::class);
+}
+
 }

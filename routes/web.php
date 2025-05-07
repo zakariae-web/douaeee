@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\PronunciationController;
+use App\Http\Controllers\TeacherDashboardController;
 use App\Models\PronunciationAttempt;
 use App\Models\Letter;
 
@@ -22,6 +23,7 @@ Route::get('/', function () {
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/jeu', function () {return view('game.index');})->name('jeu');
+
 Route::post('/verify-pronunciation', function (Request $request) {
     $expectedWord = Session::get('currentLetter', 'A');
     $spokenWord = $request->input('word');
@@ -37,6 +39,11 @@ Route::get('/letters', function () {
 
 Route::post('/attempt', [PronunciationController::class, 'store'])->middleware('auth');
 
-Route::get('/results', function () {$attempts = PronunciationAttempt::where('user_id', Auth::id())->get();
+Route::get('/results', function () {
+    $attempts = PronunciationAttempt::where('user_id', Auth::id())->latest()->paginate(10);
     return view('game.results', compact('attempts'));
-});
+})->name('results');
+
+Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/admin/user/{id}/attempts', [TeacherDashboardController::class, 'showUserAttempts'])->name('admin.user.attempts');
+

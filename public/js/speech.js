@@ -9,7 +9,11 @@ window.onload = function() {
     document.getElementById('start').addEventListener('click', () => {
         recognition.start();
     });
-
+    function playLetterSound(letter) {
+        const audio = new Audio(`/audio/letters/${letter.toUpperCase()}.mp3`);
+        audio.play();
+    }
+    
     recognition.onresult = function(event) {
         const spokenWord = event.results[0][0].transcript.trim(); // 🗣 Mot prononcé sans modification
         const spokenWordUpper = spokenWord.toUpperCase(); // 🔤 Convertir en majuscules
@@ -19,7 +23,8 @@ window.onload = function() {
         const currentLetter = localStorage.getItem("currentLetter") || "A";
 
         // Vérification du succès
-         const isCorrect = spokenWord.toUpperCase().includes(currentLetter.toUpperCase());
+        const isCorrect = spokenWord.toUpperCase().includes(`LA LETTRE ${currentLetter}`);
+         playLetterSound(currentLetter);
 
         fetch('/attempt', {
             method: 'POST',

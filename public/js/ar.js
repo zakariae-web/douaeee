@@ -4,10 +4,17 @@ import { FontLoader } from '/js/three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from '/js/three/examples/jsm/geometries/TextGeometry.js';
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87CEEB); 
+scene.background = new THREE.Color(0xA1E3F9); 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+const container = document.getElementById("ar-container");
+const containerWidth = container.clientWidth;
+const containerHeight = container.clientHeight;
+
+renderer.setSize(containerWidth, containerHeight);
+camera.aspect = containerWidth / containerHeight;
+camera.updateProjectionMatrix();
+
 document.getElementById("ar-container").appendChild(renderer.domElement);
 
 // 📷 Position de la caméra
@@ -27,7 +34,7 @@ controls.enableDamping = true;
 
 const groundGeometry = new THREE.CircleGeometry(10, 32);
 const groundMaterial = new THREE.MeshStandardMaterial({ 
-    color: 0x7CFC00, // 🟢 Vert prairie
+    color: 0x5B913B, // 🟢 Vert prairie
     side: THREE.DoubleSide 
 });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
@@ -94,7 +101,7 @@ function loadLetter(letter) {
         geometry.center(); // Centre la géométrie
         geometry.rotateY(Math.PI); // Rotation corrective
         const material = new THREE.MeshStandardMaterial({
-            color: 0xE0FFFF,
+            color: 0xffffff, // couleur de la lettre
             metalness: 0.1,
             roughness: 0.8
         });
@@ -188,6 +195,10 @@ function saveAttempt(letter, spokenWord, success) {
       .then(data => console.log("Saved:", data))
       .catch(error => console.error("Error:", error));
 }
+function playLetterSound(letter) {
+    const audio = new Audio(`/audio/letters/${letter.toUpperCase()}.mp3`);
+    audio.play();
+}
 
 // Supprimez la version dupliquée et gardez cette seule version
 recognition.onresult = function(event) {
@@ -198,6 +209,7 @@ recognition.onresult = function(event) {
     
     // Mise à jour correcte des paramètres
     saveAttempt(currentLetter, spokenWord, isCorrect);
+    playLetterSound(currentLetter);
 
     if (isCorrect) {
         document.getElementById("result").innerText += "Correct!";
@@ -226,6 +238,7 @@ window.addEventListener("updateLetter", (event) => {
     localStorage.setItem("currentLetter", newLetter);
     console.log("Lettre actuelle enregistrée:", newLetter);
 
+    instruction.innerHTML = `Cliquez sur le bouton puis dites à haute voix: <strong>"la lettre ${newLetter}"</strong>.`;
 });
 
 window.addEventListener("keydown", function (event) {
@@ -253,6 +266,36 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+document.getElementById("skip").addEventListener("click", () => {
+    saveSkipped(currentLetter); // Enregistrer comme skippée
+
+    // Charger la lettre suivante
+    currentLetter = getNextLetter();
+
+    // Mettre à jour la scène avec la nouvelle lettre
+    window.dispatchEvent(new CustomEvent("updateLetter", { 
+        detail: { letter: currentLetter } 
+    }));
+});
+function saveSkipped(letter) {
+    fetch('/attempt', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            letter: letter,
+            attempted_word: null,
+            success: false,
+            skipped: true
+        }),
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => console.log("Lettre skippée enregistrée:", data))
+    .catch(error => console.error("Erreur enregistrement skip:", error));
+}
 
 
 // 🎬 Boucle d'animation (sans rotation)
