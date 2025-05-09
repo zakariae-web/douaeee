@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/jeu', function () {return view('game.index');})->name('jeu');
+Route::get('/jeu', function () {return view('game.index');})->middleware('auth')->name('jeu');
 
 Route::post('/verify-pronunciation', function (Request $request) {
     $expectedWord = Session::get('currentLetter', 'A');
