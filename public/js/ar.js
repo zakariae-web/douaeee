@@ -135,30 +135,39 @@ document.getElementById("start").addEventListener("click", () => {
 
 let letters = [];
 
+// Liste des lettres déjà réussies
+let successfullyCompletedLetters = [];
+
+// Fonction de récupération des lettres
 async function fetchLetters() {
     try {
-        const response = await fetch('/letters');
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
+        const stageSelect = document.getElementById("stage-select");
+        const stageId = stageSelect ? stageSelect.value : 1;
+
+        const response = await fetch(`/letters?stage_id=${stageId}`);
+        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+
         letters = await response.json();
-        console.log("Lettres disponibles :", letters);
-        
+        console.log(`Lettres pour le stage ${stageId} :`, letters);
+
         if (letters.length > 0) {
             currentLetter = getNextLetter();
-            // Émettre l'événement initial
             window.dispatchEvent(new CustomEvent("updateLetter", { 
-                detail: { letter: currentLetter } 
+                detail: { letter: currentLetter }
             }));
+        } else {
+            console.warn("Aucune lettre trouvée pour ce stage.");
         }
     } catch (error) {
-        console.error("Erreur de chargement :", error);
-        // Fallback avec lettres par défaut
-        letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                 'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-        currentLetter = getNextLetter();
-        loadLetter(currentLetter);
+        console.error("Erreur de chargement des lettres:", error);
     }
 }
+
+
+
+
+document.getElementById("stage-select")?.addEventListener("change", fetchLetters);
+
 
 function getNextLetter() {
     if (letters.length === 0) {
@@ -212,20 +221,22 @@ recognition.onresult = function(event) {
     playLetterSound(currentLetter);
 
     if (isCorrect) {
-        document.getElementById("result").innerText += "Correct!";
-        setTimeout(() => {
-            currentLetter = getNextLetter();
-            // Émettre l'événement avec la nouvelle lettre
-            window.dispatchEvent(new CustomEvent("updateLetter", { 
-                detail: { letter: currentLetter } 
-            }));
-        }, 1000);
-    } else {
-        document.getElementById("result").innerText += "Try again.";
-    }
+    document.getElementById("result").innerText += "Correct!";
+    
+    // Ajouter la lettre réussie à la liste des lettres complétées
+    successfullyCompletedLetters.push(currentLetter);
+
+    setTimeout(() => {
+        currentLetter = getNextLetter(letters);  // Passer à la lettre suivante
+        window.dispatchEvent(new CustomEvent("updateLetter", { 
+            detail: { letter: currentLetter } 
+        }));
+    }, 1000);
+}
 };
 window.addEventListener("updateLetter", (event) => {
     const newLetter = event.detail.letter; // Accès correct à la propriété
+
     console.log("Nouvelle lettre reçue :", newLetter);
     
     // Mise à jour de la variable globale

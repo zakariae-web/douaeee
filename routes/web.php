@@ -33,9 +33,13 @@ Route::post('/verify-pronunciation', function (Request $request) {
     ]);
 });
 Route::get('/random-letter', [PronunciationController::class, 'getRandomLetter']);
-Route::get('/letters', function () {
-    return response()->json(Letter::pluck('letter'));
+Route::get('/letters', function (Request $request) {
+    $stageId = $request->query('stage_id', 1);
+    return response()->json(
+        Letter::where('stage_id', $stageId)->pluck('letter')
+    );
 });
+
 
 Route::post('/attempt', [PronunciationController::class, 'store'])->middleware('auth');
 
