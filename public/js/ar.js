@@ -147,16 +147,18 @@ async function fetchLetters() {
         const response = await fetch(`/letters?stage_id=${stageId}`);
         if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
 
-        letters = await response.json();
-        console.log(`Lettres pour le stage ${stageId} :`, letters);
+  
 
+        // Récupérer uniquement les lettres non réussies
+        letters = await response.json();
+      console.log(`Lettres pour le stage ${stageId} :`, letters);
         if (letters.length > 0) {
-            currentLetter = getNextLetter();
+            currentLetter = getNextLetter(letters);  // Passer à la prochaine lettre disponible
             window.dispatchEvent(new CustomEvent("updateLetter", { 
                 detail: { letter: currentLetter }
             }));
         } else {
-            console.warn("Aucune lettre trouvée pour ce stage.");
+            console.warn("Toutes les lettres ont déjà été réussies pour ce stage.");
         }
     } catch (error) {
         console.error("Erreur de chargement des lettres:", error);
@@ -166,22 +168,27 @@ async function fetchLetters() {
 
 
 
+
 document.getElementById("stage-select")?.addEventListener("change", fetchLetters);
 
 
-function getNextLetter() {
-    if (letters.length === 0) {
-        console.error("Aucune lettre disponible, retour à A");
-        return "A";
+async function getNextLetter() {
+    const stageSelect = document.getElementById("stage-select");
+    const stageId = stageSelect ? stageSelect.value : 1;
+
+    try {
+        const response = await fetch(`/random-letter?stage_id=${stageId}`);
+        if (!response.ok) {
+            throw new Error('Erreur HTTP: ' + response.status);
+        }
+        const data = await response.json();
+        return data.letter; // Retourne la lettre reçue
+    } catch (error) {
+        console.error("Erreur lors de la récupération de la prochaine lettre:", error);
+        return 'A'; // Par défaut en cas d'erreur
     }
-    
-    // Sélection aléatoire robuste
-    const randomIndex = Math.floor(Math.random() * letters.length);
-    const nextLetter = letters[randomIndex];
-    
-    console.log("Prochaine lettre :", nextLetter);
-    return nextLetter;
 }
+
 
 // Charger les lettres au démarrage
 fetchLetters();
@@ -197,13 +204,15 @@ function saveAttempt(letter, spokenWord, success) {
         body: JSON.stringify({
             letter: letter,
             attempted_word: spokenWord, // Utilisation correcte du paramètre
-            success: success
+            success: success,
+            stage_id: document.getElementById("stage-select").value  // Inclure l'ID du stage
         }),
         credentials: 'include'
     }).then(response => response.json())
       .then(data => console.log("Saved:", data))
       .catch(error => console.error("Error:", error));
 }
+
 function playLetterSound(letter) {
     const audio = new Audio(`/audio/letters/${letter.toUpperCase()}.mp3`);
     audio.play();
@@ -238,7 +247,7 @@ window.addEventListener("updateLetter", (event) => {
     const newLetter = event.detail.letter; // Accès correct à la propriété
 
     console.log("Nouvelle lettre reçue :", newLetter);
-    
+    console.log(`Lettres pour le stage  :`, letters);
     // Mise à jour de la variable globale
     currentLetter = newLetter;
     

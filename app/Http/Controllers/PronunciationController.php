@@ -47,12 +47,24 @@ class PronunciationController extends Controller
         ]);
     }
 
-    public function getRandomLetter()
-    {
-        $letter = Letter::inRandomOrder()->first();
-        session(['currentLetter' => $letter->letter]);
-        return response()->json(['letter' => $letter->letter]);
+
+
+public function getRandomLetter(Request $request)
+{
+    $stageId = $request->query('stage_id');
+
+    if (!$stageId) {
+        return response()->json(['error' => 'stage_id is required'], 400);
     }
+
+    $letter = Letter::where('stage_id', $stageId)->inRandomOrder()->first();
+
+    if (!$letter) {
+        return response()->json(['error' => 'No letter found for this stage'], 404);
+    }
+
+    return response()->json(['letter' => $letter->value]);
+}
 
 
 }

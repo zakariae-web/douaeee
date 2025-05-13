@@ -35,10 +35,27 @@ Route::post('/verify-pronunciation', function (Request $request) {
 Route::get('/random-letter', [PronunciationController::class, 'getRandomLetter']);
 Route::get('/letters', function (Request $request) {
     $stageId = $request->query('stage_id', 1);
-    return response()->json(
-        Letter::where('stage_id', $stageId)->pluck('letter')
-    );
+    $userId = Auth::id();
+
+    if (!$userId) {
+        return response()->json(['error' => 'Non authentifié'], 401);
+    }
+
+    // Lettres déjà réussies par l'utilisateur
+    $successfulLetters = PronunciationAttempt::where('user_id', $userId)
+        ->where('success', true)
+        ->pluck('letter');
+
+    // Lettres du stage non encore réussies
+    $letters = Letter::where('stage_id', $stageId)
+        ->whereNotIn('letter', $successfulLetters)
+        ->pluck('letter');
+
+    return response()->json($letters);
 });
+
+
+
 
 
 Route::post('/attempt', [PronunciationController::class, 'store'])->middleware('auth');
