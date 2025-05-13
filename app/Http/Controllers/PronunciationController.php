@@ -11,7 +11,7 @@ class PronunciationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'letter' => 'required|string|max:1',
+            'letter' => 'required|string|max:50',
             'attempted_word' => 'nullable|string',
             'success' => 'required|boolean',
             'skipped' => 'nullable|boolean'

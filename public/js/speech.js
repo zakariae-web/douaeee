@@ -51,41 +51,53 @@ window.onload = function () {
             .catch(error => console.error("Erreur chargement lettre :", error));
     }
 
-    recognition.onresult = function (event) {
-        const spokenWord = event.results[0][0].transcript.trim();
-        result.textContent = "Vous avez dit : " + spokenWord;
+  recognition.onresult = function (event) {
+    const spokenWord = event.results[0][0].transcript.trim();
+    result.textContent = "Vous avez dit : " + spokenWord;
 
-        const isCorrect = spokenWord.toUpperCase().includes(`LA LETTRE ${currentLetter}`);
+    const stageId = parseInt(document.getElementById("stage-select").value); // récupère le stage
+
+    let isCorrect = false;
+
+    if (stageId === 1 || stageId === 2) {
+        // Attente d’une réponse de type "la lettre A"
+        isCorrect = spokenWord.toUpperCase().includes(`LA LETTRE ${currentLetter.toUpperCase()}`);
         playLetterSound(currentLetter);
+    } else {
+        // Pour les mots, comparaison simple
+        isCorrect = spokenWord.toLowerCase() === currentLetter.toLowerCase();
+        playLetterSound(currentLetter);
+    }
 
-        fetch('/attempt', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                letter: currentLetter,
-                attempted_word: spokenWord,
-                success: isCorrect
-            })
+    fetch('/attempt', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            letter: currentLetter,
+            attempted_word: spokenWord,
+            success: isCorrect
         })
-            .then(response => {
-                if (!response.ok) throw new Error("Erreur réponse serveur");
-                return response.json();
-            })
-            .then(data => {
-                console.log("Tentative enregistrée :", data);
-                if (isCorrect) {
-                    result.textContent += " ✅ Correct !";
-                    setTimeout(() => fetchNextLetter(), 1000);
-                } else {
-                    result.textContent += " ❌ Essayez encore.";
-                }
-            })
-            .catch(error => console.error("Erreur :", error));
-    };
+    })
+        .then(response => {
+            if (!response.ok) throw new Error("Erreur réponse serveur");
+            return response.json();
+        })
+        .then(data => {
+            console.log("Tentative enregistrée :", data);
+            if (isCorrect) {
+                result.textContent += " ✅ Correct !";
+                setTimeout(() => fetchNextLetter(), 1000);
+            } else {
+                result.textContent += " ❌ Essayez encore.";
+            }
+        })
+        .catch(error => console.error("Erreur :", error));
+};
+
 
     recognition.onerror = function (event) {
         console.error("Erreur de reconnaissance vocale :", event.error);
