@@ -2,6 +2,88 @@
 
 @section('content')
 <div class="container">
+    <!-- Hero Section -->
+    <div class="row align-items-center min-vh-75 py-5">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold mb-4">Apprentissage Innovant avec la Réalité Virtuelle</h1>
+            <p class="lead text-muted mb-4">Une approche révolutionnaire pour aider les enfants ayant des difficultés de lecture et de prononciation grâce à la réalité virtuelle.</p>
+            <div class="d-flex gap-3">
+                <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Commencer l'aventure</a>
+                <a href="#features" class="btn btn-outline-secondary btn-lg">Découvrir</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <img src="{{ asset('images/hero-vr.png') }}" alt="Illustration" class="img-fluid">
+        </div>
+    </div>
 
+    <!-- Features Section -->
+    <div id="features" class="py-5">
+        <h2 class="text-center mb-5">Nos Solutions Innovantes</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{{ asset('images/vr-learning.jpg') }}" class="card-img-top p-3" alt="Apprentissage VR">
+                    <div class="card-body text-center">
+                        <i class="fas fa-vr-cardboard fa-3x text-primary mb-3"></i>
+                        <h3 class="h5">Apprentissage Immersif</h3>
+                        <p class="text-muted">Un environnement virtuel engageant qui rend l'apprentissage de la lecture amusant et interactif.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{{ asset('images/personalized-exercises.jpg') }}" class="card-img-top p-3" alt="Exercices Personnalisés">
+                    <div class="card-body text-center">
+                        <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
+                        <h3 class="h5">Exercices Personnalisés</h3>
+                        <p class="text-muted">Des exercices adaptés au niveau et aux besoins spécifiques de chaque enfant.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{{ asset('images/progress-tracking.jpg') }}" class="card-img-top p-3" alt="Suivi des Progrès">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h3 class="h5">Suivi des Progrès</h3>
+                        <p class="text-muted">Un tableau de bord détaillé pour suivre l'évolution et les accomplissements de votre enfant.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="py-5">
+        <h2 class="text-center mb-5">Pourquoi Choisir Notre Solution ?</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="d-flex align-items-start mb-4">
+                    <i class="fas fa-check-circle text-primary fa-2x me-3 mt-1"></i>
+                    <div>
+                        <h4 class="h5">Approche Scientifique</h4>
+                        <p class="text-muted">Méthodes pédagogiques basées sur des recherches en neurosciences et en éducation.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-start mb-4">
+                    <i class="fas fa-brain text-primary fa-2x me-3 mt-1"></i>
+                    <div>
+                        <h4 class="h5">Stimulation Multi-sensorielle</h4>
+                        <p class="text-muted">Engagement visuel, auditif et kinesthésique pour un apprentissage optimal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center py-5">
+        <h2 class="mb-4">Donnez à votre enfant les clés de la réussite</h2>
+        <p class="lead text-muted mb-4">Rejoignez les familles qui ont déjà transformé l'apprentissage de leur enfant</p>
+        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Commencer Gratuitement</a>
+    </div>
 </div>
 @endsection
