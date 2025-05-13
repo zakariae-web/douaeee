@@ -320,6 +320,7 @@ function saveSkipped(letter) {
 }
 
 
+
 // 🎬 Boucle d'animation (sans rotation)
 function animate() {
     requestAnimationFrame(animate);
