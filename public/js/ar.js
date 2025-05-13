@@ -282,12 +282,22 @@ document.getElementById("skip").addEventListener("click", () => {
     saveSkipped(currentLetter); // Enregistrer comme skippée
 
     // Charger la lettre suivante
-    currentLetter = getNextLetter();
+    currentLetter = getNextLetter(letters);
 
     // Mettre à jour la scène avec la nouvelle lettre
     window.dispatchEvent(new CustomEvent("updateLetter", { 
         detail: { letter: currentLetter } 
     }));
+
+    // Si toutes les lettres du stage actuel sont complétées
+    if (!letters.length) {
+        if (currentStageId < 4) {
+            currentStageId++;
+            fetchLetters(); // Charger les lettres du prochain stage
+        } else {
+            alert("Félicitations ! Vous avez terminé tous les niveaux !");
+        }
+    }
 });
 function saveSkipped(letter) {
     fetch('/attempt', {
