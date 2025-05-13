@@ -137,28 +137,30 @@ let letters = [];
 
 // Liste des lettres déjà réussies
 let successfullyCompletedLetters = [];
+let currentStageId = 1;
 
 // Fonction de récupération des lettres
 async function fetchLetters() {
     try {
-        const stageSelect = document.getElementById("stage-select");
-        const stageId = stageSelect ? stageSelect.value : 1;
-
-        const response = await fetch(`/letters?stage_id=${stageId}`);
+        const response = await fetch(`/letters?stage_id=${currentStageId}`);
         if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
 
-  
-
-        // Récupérer uniquement les lettres non réussies
         letters = await response.json();
-      console.log(`Lettres pour le stage ${stageId} :`, letters);
+
         if (letters.length > 0) {
-            currentLetter = getNextLetter(letters);  // Passer à la prochaine lettre disponible
-            window.dispatchEvent(new CustomEvent("updateLetter", { 
+            currentLetter = getNextLetter(letters);
+
+            window.dispatchEvent(new CustomEvent("updateLetter", {
                 detail: { letter: currentLetter }
             }));
         } else {
-            console.warn("Toutes les lettres ont déjà été réussies pour ce stage.");
+            if (currentStageId < 4) {
+                currentStageId++;
+                console.log(`🎉 Niveau terminé, passage au niveau ${currentStageId}`);
+                await fetchLetters();
+            } else {
+                alert("Félicitations ! Vous avez terminé tous les niveaux !");
+            }
         }
     } catch (error) {
         console.error("Erreur de chargement des lettres:", error);
@@ -167,26 +169,12 @@ async function fetchLetters() {
 
 
 
-
-
 document.getElementById("stage-select")?.addEventListener("change", fetchLetters);
 
 
-async function getNextLetter() {
-    const stageSelect = document.getElementById("stage-select");
-    const stageId = stageSelect ? stageSelect.value : 1;
-
-    try {
-        const response = await fetch(`/random-letter?stage_id=${stageId}`);
-        if (!response.ok) {
-            throw new Error('Erreur HTTP: ' + response.status);
-        }
-        const data = await response.json();
-        return data.letter; // Retourne la lettre reçue
-    } catch (error) {
-        console.error("Erreur lors de la récupération de la prochaine lettre:", error);
-        return 'A'; // Par défaut en cas d'erreur
-    }
+function getNextLetter(availableLetters) {
+    const index = Math.floor(Math.random() * availableLetters.length);
+    return availableLetters[index];
 }
 
 
@@ -258,7 +246,11 @@ window.addEventListener("updateLetter", (event) => {
     localStorage.setItem("currentLetter", newLetter);
     console.log("Lettre actuelle enregistrée:", newLetter);
 
-    instruction.innerHTML = `Cliquez sur le bouton puis dites à haute voix: <strong>"la lettre ${newLetter}"</strong>.`;
+    if (currentStageId <= 2) {
+        instruction.innerHTML = `Cliquez sur le bouton puis dites à haute voix : <strong>"la lettre ${currentLetter}"</strong>`;
+    } else {
+        instruction.innerHTML = `Cliquez sur le bouton puis dites à haute voix le mot : <strong>"${currentLetter}"</strong>`;
+    }
 });
 
 window.addEventListener("keydown", function (event) {

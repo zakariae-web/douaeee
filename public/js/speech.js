@@ -4,7 +4,7 @@ window.onload = function () {
     recognition.interimResults = false;
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    const stageSelect = document.getElementById('stage-select');
+    let currentStageId = 1;
     const instruction = document.getElementById('instruction');
     const result = document.getElementById('result');
 
@@ -14,12 +14,7 @@ window.onload = function () {
         recognition.start();
     });
 
-    if (stageSelect) {
-        stageSelect.addEventListener('change', () => {
-            updateStageLabel();
-            fetchNextLetter(); // Nouvelle lettre au changement de stage
-        });
-    }
+
 
     function updateStageLabel() {
         const stageLabel = document.getElementById('stage-label');
@@ -34,28 +29,45 @@ window.onload = function () {
         audio.play();
     }
 
-    function fetchNextLetter() {
-        const stageId = stageSelect ? stageSelect.value : 1;
+function fetchNextLetter() {
+    fetch(`/letters?stage_id=${currentStageId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.length) {
+                if (currentStageId < 4) {
+                    currentStageId++;
+                    console.log(`✅ Niveau ${currentStageId - 1} terminé, passage à ${currentStageId}`);
+                    fetchNextLetter();
+                } else {
+                    alert("🎉 Félicitations ! Vous avez terminé tous les niveaux !");
+                }
+                return;
+            }
 
-        fetch(`/letters?stage_id=${stageId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data.length) throw new Error("Aucune lettre trouvée");
-                currentLetter = data[Math.floor(Math.random() * data.length)];
-                localStorage.setItem("currentLetter", currentLetter);
+            currentLetter = data[Math.floor(Math.random() * data.length)];
+            localStorage.setItem("currentLetter", currentLetter);
+
+            // Adapter l'instruction selon le niveau
+            if (currentStageId <= 2) {
                 instruction.innerHTML = `Cliquez sur le bouton puis dites à haute voix : <strong>"la lettre ${currentLetter}"</strong>`;
-                window.dispatchEvent(new CustomEvent("updateLetter", {
-                    detail: { letter: currentLetter }
-                }));
-            })
-            .catch(error => console.error("Erreur chargement lettre :", error));
-    }
+            } else {
+                instruction.innerHTML = `Cliquez sur le bouton puis dites à haute voix : <strong>"le mot ${currentLetter}"</strong>`;
+            }
+
+            window.dispatchEvent(new CustomEvent("updateLetter", {
+                detail: { letter: currentLetter }
+            }));
+        })
+        .catch(error => console.error("Erreur chargement lettre :", error));
+}
+
 
   recognition.onresult = function (event) {
     const spokenWord = event.results[0][0].transcript.trim();
     result.textContent = "Vous avez dit : " + spokenWord;
 
-    const stageId = parseInt(document.getElementById("stage-select").value); // récupère le stage
+    const stageId = currentStageId;
+
 
     let isCorrect = false;
 
@@ -133,3 +145,4 @@ window.onload = function () {
     updateStageLabel();
     fetchNextLetter();
 };
+
