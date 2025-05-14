@@ -89,7 +89,7 @@ function loadLetter(letter) {
 
     removeOldLetter();
 
-    fontLoader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
+    fontLoader.load('/fonts/droid/droid_sans_regular.typeface.json', (font) => {
         removeOldLetter(); // Double vérification
         
         const geometry = new TextGeometry(letter, {

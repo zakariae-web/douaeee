@@ -54,30 +54,6 @@
         </div>
     </div>
 
-    <!-- Benefits Section -->
-    <div class="py-5">
-        <h2 class="text-center mb-5">Pourquoi Choisir Notre Solution ?</h2>
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="d-flex align-items-start mb-4">
-                    <i class="fas fa-check-circle text-primary fa-2x me-3 mt-1"></i>
-                    <div>
-                        <h4 class="h5">Approche Scientifique</h4>
-                        <p class="text-muted">Méthodes pédagogiques basées sur des recherches en neurosciences et en éducation.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex align-items-start mb-4">
-                    <i class="fas fa-brain text-primary fa-2x me-3 mt-1"></i>
-                    <div>
-                        <h4 class="h5">Stimulation Multi-sensorielle</h4>
-                        <p class="text-muted">Engagement visuel, auditif et kinesthésique pour un apprentissage optimal.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Call to Action -->
     <div class="text-center py-5">

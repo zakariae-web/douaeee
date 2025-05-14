@@ -29,7 +29,18 @@
                                 </button>
                             </div>
                         </div>
-
+                        <div id="result-container" class="mt-4 mb-4 text-center d-none">
+                            <div class="alert custom-alert alert-dismissible fade show" role="alert">
+                                <div class="result-icon-wrapper">
+                                    <i class="result-icon"></i>
+                                 </div>
+                                <div class="result-content">
+                                    <span id="result-message"></span>
+                                    <div class="pronunciation-text mt-2"></div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
                         <!-- AR Container -->
                         <div class="ar-wrapper mb-4">
                             <div id="ar-container" class="rounded-3 overflow-hidden" style="width: 100%; height: 70vh; border: 2px solid #e9ecef; background-color: #f8f9fa;"></div>
@@ -44,18 +55,7 @@
                         </div>
 
                         <!-- Result Message Container -->
-                        <div id="result-container" class="mt-4 text-center d-none">
-                            <div class="alert custom-alert alert-dismissible fade show" role="alert">
-                                <div class="result-icon-wrapper">
-                                    <i class="result-icon"></i>
-                                </div>
-                                <div class="result-content">
-                                    <span id="result-message"></span>
-                                    <div class="pronunciation-text mt-2"></div>
-                                </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-
+    
     /* Styles améliorés pour le conteneur de résultat */
     #result-container {
         perspective: 1000px;
@@ -140,7 +140,7 @@
         background-color: rgba(40, 167, 69, 0.1);
         color: #28a745;
     }
-
+    
     .custom-alert.alert-danger {
         background: linear-gradient(145deg, #ffffff, #f8d7da);
         border-left: 4px solid #dc3545;
@@ -223,7 +223,7 @@
             
             // Set alert type
             alert.classList.add(isSuccess ? 'alert-success' : 'alert-danger');
-            
+
             // Show pronunciation if available
             if (spokenWord) {
                 pronunciationText.textContent = `Prononciation : "${spokenWord}"`;
@@ -252,11 +252,11 @@
             button.addEventListener('click', function() {
                 const alert = this.closest('.alert');
                 alert.classList.add('fade-out');
-                setTimeout(() => {
+            setTimeout(() => {
                     resultContainer.classList.add('d-none');
                     alert.classList.remove('fade-out');
                 }, 300);
-            });
+        });
         });
     });
     </script>
