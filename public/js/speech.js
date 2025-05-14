@@ -57,21 +57,8 @@ window.onload = function () {
             .catch(error => console.error("Erreur chargement lettre :", error));
     }
 
-    function showModalMessage(message, isSuccess) {
-        const modal = document.getElementById("resultModal");
-        const modalMessage = document.getElementById("modalMessage");
-
-        if (modal && modalMessage) {
-            let icon = isSuccess ? "✅" : "❌";
-            modalMessage.innerHTML = `${icon} ${message}`;
-            modal.style.display = "flex";
-
-            if (isSuccess) {
-                setTimeout(() => {
-                    modal.style.display = "none";
-                }, 2000);
-            }
-        }
+    function showModalMessage(message, isSuccess, spokenWord) {
+        window.showResultMessage(message, isSuccess, spokenWord);
     }
 
     recognition.onresult = function (event) {
@@ -107,10 +94,10 @@ window.onload = function () {
             .then(data => {
                 console.log("Tentative enregistrée :", data);
                 if (isCorrect) {
-                    showModalMessage(`Bravo ! Vous avez correctement prononcé "${spokenWord}" !`, true);
+                    showModalMessage(`Bravo ! Vous avez correctement prononcé "${spokenWord}" !`, true, spokenWord);
                     setTimeout(() => fetchNextLetter(), 1000);
                 } else {
-                    showModalMessage(`Ce n'est pas correct. Vous avez dit "${spokenWord}". Essayez encore !`, false);
+                    showModalMessage(`Ce n'est pas correct. Vous avez dit "${spokenWord}". Essayez encore !`, false, spokenWord);
                 }
             })
             .catch(error => console.error("Erreur :", error));

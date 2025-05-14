@@ -42,43 +42,21 @@
                                 Passer cette lettre
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Result Modal -->
-    <div id="resultModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold">
-                        <i class="fas fa-comment-dots me-2 text-primary"></i>
-                        Résultat
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <div id="modalResult" class="mb-4">
-                        <!-- Success Icon -->
-                        <div class="success-icon mb-3 d-none">
-                            <i class="fas fa-check-circle text-success fa-3x"></i>
-                        </div>
-                        <!-- Error Icon -->
-                        <div class="error-icon mb-3 d-none">
-                            <i class="fas fa-times-circle text-danger fa-3x"></i>
+                        <!-- Result Message Container -->
+                        <div id="result-container" class="mt-4 text-center d-none">
+                            <div class="alert custom-alert alert-dismissible fade show" role="alert">
+                                <div class="result-icon-wrapper">
+                                    <i class="result-icon"></i>
+                                </div>
+                                <div class="result-content">
+                                    <span id="result-message"></span>
+                                    <div class="pronunciation-text mt-2"></div>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
                     </div>
-                    <p id="modalMessage" class="mb-3 fs-5">Résultat ici...</p>
-                    <div class="pronunciation-feedback mt-3 d-none">
-                        <p class="text-muted mb-2">Votre prononciation :</p>
-                        <div class="pronunciation-text fw-bold"></div>
-                    </div>
-                </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" id="tryAgainBtn">Réessayer</button>
                 </div>
             </div>
         </div>
@@ -108,55 +86,113 @@
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-    
-    .modal-content {
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+    /* Styles améliorés pour le conteneur de résultat */
+    #result-container {
+        perspective: 1000px;
     }
 
-    .modal-header, .modal-footer {
-        background-color: transparent;
-    }
-
-    .modal-body {
-        padding: 2rem;
-    }
-    
-    #start {
-        background: linear-gradient(45deg, #2196F3, #1976D2);
-        border: none;
-        padding: 1rem 2rem;
-    }
-    
-    #skip {
-        border: 2px solid #FFC107;
-        color: #FFC107;
-        padding: 1rem 2rem;
-    }
-    
-    #skip:hover {
-        background: #FFC107;
-        color: white;
-    }
-
-    .success-icon, .error-icon {
-        animation: scaleIn 0.3s ease-in-out;
-    }
-
-    .pronunciation-feedback {
-        background-color: #f8f9fa;
-        border-radius: 10px;
+    .custom-alert {
+        display: flex;
+        align-items: center;
+        max-width: 600px;
+        margin: 0 auto;
         padding: 1rem;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform-origin: top;
+        animation: slideIn 0.3s ease-out;
+        background: white;
+    }
+
+    .result-icon-wrapper {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+
+    .result-icon {
+        font-size: 24px;
+        animation: scaleIn 0.3s ease-out;
+    }
+
+    .result-content {
+        flex: 1;
+        text-align: left;
+    }
+
+    .pronunciation-text {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .custom-alert.alert-success {
+        background: linear-gradient(145deg, #ffffff, #d4edda);
+        border-left: 4px solid #28a745;
+    }
+
+    .custom-alert.alert-success .result-icon-wrapper {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+
+    .custom-alert.alert-danger {
+        background: linear-gradient(145deg, #ffffff, #f8d7da);
+        border-left: 4px solid #dc3545;
+    }
+
+    .custom-alert.alert-danger .result-icon-wrapper {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+
+    .btn-close {
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px) rotateX(-10deg);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
     }
 
     @keyframes scaleIn {
-        0% {
+        from {
             transform: scale(0);
-            opacity: 0;
         }
-        100% {
+        to {
             transform: scale(1);
+        }
+    }
+
+    /* Ajout d'une animation de disparition */
+    .custom-alert.fade-out {
+        animation: slideOut 0.3s ease-in forwards;
+    }
+
+    @keyframes slideOut {
+        from {
             opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-20px) rotateX(10deg);
         }
     }
 
@@ -165,65 +201,62 @@
             width: 100%;
             margin: 0.5rem 0;
         }
-        .modal-body {
-            padding: 1.5rem;
-        }
     }
     </style>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const modal = new bootstrap.Modal(document.getElementById('resultModal'));
-        const modalResult = document.getElementById('modalResult');
-        const modalMessage = document.getElementById('modalMessage');
-        const successIcon = modalResult.querySelector('.success-icon');
-        const errorIcon = modalResult.querySelector('.error-icon');
-        const pronunciationFeedback = document.querySelector('.pronunciation-feedback');
+        const resultContainer = document.getElementById('result-container');
+        const resultMessage = document.getElementById('result-message');
         const pronunciationText = document.querySelector('.pronunciation-text');
-        const tryAgainBtn = document.getElementById('tryAgainBtn');
 
-        // Fonction pour afficher le modal avec le résultat
-        window.showResultModal = function(success, message, spokenWord) {
-            // Reset previous state
-            successIcon.classList.add('d-none');
-            errorIcon.classList.add('d-none');
-            pronunciationFeedback.classList.add('d-none');
-
-            // Show appropriate icon
-            if (success) {
-                successIcon.classList.remove('d-none');
-                modalMessage.classList.add('text-success');
-            } else {
-                errorIcon.classList.remove('d-none');
-                modalMessage.classList.add('text-danger');
-            }
-
-            // Set message
-            modalMessage.textContent = message;
-
-            // Show pronunciation feedback if we have a spoken word
+        window.showResultMessage = function(message, isSuccess, spokenWord = '') {
+            const alert = resultContainer.querySelector('.alert');
+            const icon = resultContainer.querySelector('.result-icon');
+            
+            // Reset classes
+            alert.classList.remove('alert-success', 'alert-danger', 'fade-out');
+            
+            // Set message and icon
+            resultMessage.innerHTML = message;
+            icon.className = 'result-icon fas ' + (isSuccess ? 'fa-check-circle' : 'fa-times-circle');
+            
+            // Set alert type
+            alert.classList.add(isSuccess ? 'alert-success' : 'alert-danger');
+            
+            // Show pronunciation if available
             if (spokenWord) {
-                pronunciationFeedback.classList.remove('d-none');
-                pronunciationText.textContent = spokenWord;
+                pronunciationText.textContent = `Prononciation : "${spokenWord}"`;
+                pronunciationText.classList.remove('d-none');
+            } else {
+                pronunciationText.classList.add('d-none');
             }
-
-            // Show modal
-            modal.show();
+            
+            // Show container
+            resultContainer.classList.remove('d-none');
+            
+            // Auto-hide success messages after 3 seconds
+            if (isSuccess) {
+                setTimeout(() => {
+                    alert.classList.add('fade-out');
+                    setTimeout(() => {
+                        resultContainer.classList.add('d-none');
+                        alert.classList.remove('fade-out');
+                    }, 300);
+                }, 3000);
+            }
         };
 
-        // Event listener for Try Again button
-        tryAgainBtn.addEventListener('click', function() {
-            modal.hide();
-            // Trigger the start button after a short delay
-            setTimeout(() => {
-                document.getElementById('start').click();
-            }, 500);
-        });
-
-        // Clean up when modal is hidden
-        document.getElementById('resultModal').addEventListener('hidden.bs.modal', function () {
-            modalMessage.className = 'mb-3 fs-5'; // Reset message classes
-            pronunciationFeedback.classList.add('d-none');
+        // Gérer la fermeture manuelle
+        document.querySelectorAll('.btn-close').forEach(button => {
+            button.addEventListener('click', function() {
+                const alert = this.closest('.alert');
+                alert.classList.add('fade-out');
+                setTimeout(() => {
+                    resultContainer.classList.add('d-none');
+                    alert.classList.remove('fade-out');
+                }, 300);
+            });
         });
     });
     </script>
