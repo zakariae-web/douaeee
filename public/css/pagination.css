@@ -1,104 +1,151 @@
-
-  
-  .paginate {
-    padding: 32px 64px;
+.paginate {
+    padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
     background-color: #fff;
-    border-radius: 64px;
-    border: 4px solid rgb(255 222 210)
-  }
-  
-  .paginate-details {
-    margin-top: 16px;
-    font-weight: 500;
-    text-align: center;
-  }
-  
-  button {
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.paginate-details {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+button {
     background-color: transparent;
     border: none;
-  }
-  
-  .nextBtn {
-    margin-left: 32px;
-  }
-  
-  .nextBtn {
-    margin-right: 32px;
-  }
-  
-  .prevBtn, .nextBtn {
+    transition: all 0.3s ease;
+}
+
+.prevBtn, .nextBtn {
     cursor: pointer;
     display: flex;
     align-items: center;
-    font-size: 16px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    color: #2a3b52
-  }
-  
-  .nextBtn-icon, .prevBtn-icon {
-    display: flex;
-  }
-  
-  .prevBtn svg {
-    margin-right: 6px;
-  }
-  
-  .nextBtn svg {
-    margin-left: 6px;
-  }
-  
-  .prevBtn svg, .nextBtn svg {
-     color: #2a3b52
-  }
-  
-  button[disabled].prevBtn, button[disabled].nextBtn {
+    color: #3490dc;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+}
+
+.prevBtn:hover, .nextBtn:hover {
+    background-color: #f8fafc;
+    border-color: #3490dc;
+}
+
+.prevBtn i, .nextBtn i {
+    font-size: 0.75rem;
+}
+
+button[disabled].prevBtn, 
+button[disabled].nextBtn {
     cursor: not-allowed;
-      color: rgb(156 163 175 / var(--tw-text-opacity));
-  }
-  
-  .containerBtns {
-    width: 100%;
+    color: #9ca3af;
+    border-color: #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.containerBtns {
     display: flex;
-    justify-content: space-between;
-  }
-  
-  .leftContainer {
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.leftContainer, .rightContainer {
     display: flex;
-    width: 190px;
-    justify-content: end;
-  }
-  
-  .rightContainer {
-    display: flex;
-    width: 190px;
-    justify-content: start;
-  }
-  
-  .activeBtn {
-    margin: 0 12px;
-    padding: 4px 6px;
-    min-width: 40px;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.activeBtn {
+    width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #5046e5;
-    font-size: 20px;
+    background-color: #3490dc;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: #fff;
-    border-radius: 50%;
-    border: 4px solid #c9c6ff
-  }
-  
-  .numberBtn {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(52, 144, 220, 0.2);
+}
+
+.numberBtn {
     cursor: pointer;
-    margin: 0 4px;
-    min-width: 40px;
-    padding: 4px;
-    font-size: 18px;
-  }
-  
-  .numberBtn[disabled] {
-    cursor: not-allowed
-  }
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.numberBtn:hover:not([disabled]) {
+    background-color: #f1f5f9;
+    color: #3490dc;
+}
+
+.numberBtn[disabled] {
+    cursor: not-allowed;
+    color: #9ca3af;
+}
+
+/* Style pour les points de suspension */
+.dots {
+    background-color: transparent;
+    cursor: default;
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .paginate {
+        padding: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .prevBtn, .nextBtn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .numberBtn, .activeBtn, .dots {
+        width: 35px;
+        height: 35px;
+        font-size: 0.75rem;
+    }
+
+    .prevBtn-text, .nextBtn-text {
+        display: none;
+    }
+}
+
+/* Animation des boutons */
+.prevBtn, .nextBtn, .numberBtn {
+    transform: translateY(0);
+}
+
+.prevBtn:hover:not([disabled]), 
+.nextBtn:hover:not([disabled]), 
+.numberBtn:hover:not([disabled]) {
+    transform: translateY(-2px);
+}

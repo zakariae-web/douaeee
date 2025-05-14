@@ -278,47 +278,6 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
-document.getElementById("skip").addEventListener("click", () => {
-    saveSkipped(currentLetter); // Enregistrer comme skippée
-
-    // Charger la lettre suivante
-    currentLetter = getNextLetter(letters);
-
-    // Mettre à jour la scène avec la nouvelle lettre
-    window.dispatchEvent(new CustomEvent("updateLetter", { 
-        detail: { letter: currentLetter } 
-    }));
-
-    // Si toutes les lettres du stage actuel sont complétées
-    if (!letters.length) {
-        if (currentStageId < 4) {
-            currentStageId++;
-            fetchLetters(); // Charger les lettres du prochain stage
-        } else {
-            alert("Félicitations ! Vous avez terminé tous les niveaux !");
-        }
-    }
-});
-function saveSkipped(letter) {
-    fetch('/attempt', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            letter: letter,
-            attempted_word: null,
-            success: false,
-            skipped: true
-        }),
-        credentials: 'include'
-    })
-    .then(response => response.json())
-    .then(data => console.log("Lettre skippée enregistrée:", data))
-    .catch(error => console.error("Erreur enregistrement skip:", error));
-}
-
 
 
 // 🎬 Boucle d'animation (sans rotation)
