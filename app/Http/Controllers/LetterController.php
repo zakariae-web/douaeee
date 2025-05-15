@@ -22,7 +22,7 @@ class LetterController extends Controller
             return redirect()->route('home')->with('error', 'Accès non autorisé');
         }
 
-        $letters = Letter::with('stage')->get();
+        $letters = Letter::with('stage')->paginate(10);
         $stages = Stage::all();
         return view('admin.letters.index', compact('letters', 'stages'));
     }

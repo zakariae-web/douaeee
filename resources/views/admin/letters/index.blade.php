@@ -1,6 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .pagination {
+        --bs-pagination-color: #6c757d;
+        --bs-pagination-bg: #fff;
+        --bs-pagination-border-color: #dee2e6;
+        --bs-pagination-hover-color: #0d6efd;
+        --bs-pagination-hover-bg: #e9ecef;
+        --bs-pagination-focus-color: #0d6efd;
+        --bs-pagination-focus-bg: #e9ecef;
+        --bs-pagination-active-color: #fff;
+        --bs-pagination-active-bg: #0d6efd;
+        --bs-pagination-active-border-color: #0d6efd;
+        border-radius: 0.5rem;
+    }
+
+    .page-item:first-child .page-link {
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+    }
+
+    .page-item:last-child .page-link {
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+    }
+
+    .page-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        border: 1px solid #dee2e6;
+    }
+
+    .page-link:hover {
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+
+    .page-item.disabled .page-link {
+        color: #6c757d;
+        background-color: #fff;
+        border-color: #dee2e6;
+    }
+</style>
+
 <div class="container mt-5">
     <!-- Statistics Cards -->
     <div class="row mb-4">
@@ -198,6 +246,10 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $letters->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
