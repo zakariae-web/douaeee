@@ -68,3 +68,8 @@ Route::get('/results', function () {
 Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('admin.dashboard');
 Route::get('/admin/user/{id}/attempts', [TeacherDashboardController::class, 'showUserAttempts'])->name('admin.user.attempts');
 
+// Routes pour la gestion des lettres (admin)
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('letters', App\Http\Controllers\LetterController::class);
+});
+

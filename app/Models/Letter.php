@@ -11,7 +11,7 @@ class Letter extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['value', 'stage_id'];
+    protected $fillable = ['letter', 'stage_id', 'audio_path'];
 
 
     public function stage()

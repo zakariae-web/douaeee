@@ -212,6 +212,11 @@
                                         Dashboard
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admin.letters.index') }}">
+                                        <i class="fas fa-spell-check me-1"></i> Gestion des Lettres
+                                    </a>
+                                </li>
                             @endif
                         @endauth
                     </ul>
