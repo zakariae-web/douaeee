@@ -34,14 +34,26 @@
             </div>
         </div>
         @else
-        <!-- Option pour l'enseignant -->
-        <div class="col-md-8 mx-auto">
-            <div class="card h-100 border-0 shadow-sm hover-card">
-                <div class="card-body text-center p-5">
-                    <img src="{{ asset('images/progress-tracking.jpg') }}" alt="Dashboard Enseignant" class="img-fluid mb-4" style="max-height: 200px;">
-                    <h3 class="h4 mb-3">Dashboard Enseignant</h3>
-                    <p class="text-muted mb-4">Accédez au tableau de bord pour suivre les progrès de vos élèves et gérer leurs apprentissages.</p>
-                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg">Accéder au Dashboard</a>
+        <!-- Options pour l'enseignant -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-5">
+                        <img src="{{ asset('images/progress-tracking.jpg') }}" style="height: 250px" alt="Dashboard Enseignant" class="img-fluid mb-4" style="max-height: 200px;">
+                        <h3 class="h4 mb-3">Dashboard Enseignant</h3>
+                        <p class="text-muted mb-4">Accédez au tableau de bord pour suivre les progrès de vos élèves et gérer leurs apprentissages.</p>
+                        <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg">Accéder au Dashboard</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm hover-card">
+                    <div class="card-body text-center p-5">
+                        <img src="{{ asset('images/letters-management.jpg') }}" style="height: 250px" alt="Gestion des Lettres" class="img-fluid mb-4" style="max-height: 200px;">
+                        <h3 class="h4 mb-3">Gestion des Lettres</h3>
+                        <p class="text-muted mb-4">Gérez les lettres et leurs fichiers audio pour l'apprentissage des élèves.</p>
+                        <a href="{{ route('admin.letters.index') }}" class="btn btn-primary btn-lg">Gérer les Lettres</a>
+                    </div>
                 </div>
             </div>
         </div>

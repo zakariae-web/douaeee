@@ -254,6 +254,10 @@
                                         <i class="fas fa-history me-2"></i>
                                         Mes tentatives
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        <i class="fas fa-home me-2"></i>
+                                        Home
+                                    </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
