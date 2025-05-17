@@ -1,60 +1,252 @@
-.results-header {
-    animation: fadeInDown 0.5s ease-out;
+/* Variables */
+:root {
+    --primary-gradient: linear-gradient(145deg, #0d47a1, #1976d2);
+    --secondary-gradient: linear-gradient(145deg, #455a64, #607d8b);
+    --success-gradient: linear-gradient(145deg, #2e7d32, #43a047);
+    --danger-gradient: linear-gradient(145deg, #c62828, #e53935);
+    --surface-gradient: linear-gradient(145deg, #ffffff, #f8f9fa);
 }
 
+/* Header Section */
+.text-center.mb-5.results-header {
+    padding: 2.5rem;
+    background: var(--surface-gradient);
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    margin: 1rem 0 3rem;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.display-5 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+}
+
+.display-5 strong {
+    background: linear-gradient(45deg, #1e88e5, #42a5f5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-muted.lead {
+    font-size: 1.2rem;
+    color: #64748b !important;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Stats Cards */
 .stats-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px;
+    border: none !important;
+    border-radius: 20px;
+    background: white;
+    transition: all 0.3s ease;
 }
 
 .stats-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .stats-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    background: rgba(var(--bs-success-rgb), 0.1);
+    transition: all 0.3s ease;
 }
 
-.stats-card:nth-child(2) .stats-icon {
-    background: rgba(var(--bs-danger-rgb), 0.1);
+.stats-icon.text-success {
+    background: rgba(46, 125, 50, 0.1);
+    color: #2e7d32;
 }
 
-.letter-badge {
-    background: linear-gradient(45deg, #2196F3, #0D47A1);
+.stats-icon.text-danger {
+    background: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+}
+
+.stats-card:hover .stats-icon.text-success {
+    background: #2e7d32;
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 1.1em;
+}
+
+.stats-card:hover .stats-icon.text-danger {
+    background: #d32f2f;
+    color: white;
+}
+
+.stats-card .h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 1rem 0;
+}
+
+.stats-card p {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Table Styles */
+.table {
+    margin: 0;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #2d3748;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1.2rem 1.5rem;
+    background: var(--surface-gradient);
+    border: none;
+}
+
+.table td {
+    font-size: 0.95rem;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    vertical-align: middle;
 }
 
 .result-row {
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .result-row:hover {
-    background-color: rgba(0,0,0,0.02);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(248, 249, 250, 0.8));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
+/* Letter Badge */
+.letter-badge {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(13, 71, 161, 0.2);
+    transition: all 0.3s ease;
+}
+
+.result-row:hover .letter-badge {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(13, 71, 161, 0.3);
+}
+
+/* Status Badges */
+.badge {
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.badge.bg-success-subtle {
+    background: linear-gradient(145deg, rgba(46, 125, 50, 0.1), rgba(67, 160, 71, 0.1)) !important;
+    border-color: rgba(46, 125, 50, 0.2) !important;
+}
+
+.badge.bg-danger-subtle {
+    background: linear-gradient(145deg, rgba(198, 40, 40, 0.1), rgba(229, 57, 53, 0.1)) !important;
+    border-color: rgba(198, 40, 40, 0.2) !important;
+}
+
+/* Empty State */
 .empty-state {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 20px;
-    padding: 3rem;
+    background: var(--surface-gradient);
+    border-radius: 25px;
+    padding: 4rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .empty-state-icon {
-    color: #6c757d;
-    opacity: 0.5;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
 }
 
+.empty-state h3 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.empty-state p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.8rem 1.5rem;
+    font-weight: 500;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary {
+    background: var(--secondary-gradient);
+    border: none;
+    box-shadow: 0 4px 15px rgba(69, 90, 100, 0.2);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(69, 90, 100, 0.3);
+    background: linear-gradient(145deg, #546e7a, #455a64);
+}
+
+/* Pagination */
+.paginate {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem;
+    margin-top: 2rem;
+}
+
+.paginate button {
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.paginate button:hover {
+    background: var(--surface-gradient);
+    transform: translateY(-1px);
+}
+
+.paginate-details {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.paginate-details strong {
+    color: #2d3748;
+}
+
+/* Animations */
 @keyframes fadeInDown {
     from {
         opacity: 0;
@@ -65,15 +257,6 @@
         transform: translateY(0);
     }
 }
-
-/* Animation pour les cartes de statistiques */
-.stats-card {
-    animation: fadeInUp 0.5s ease-out;
-    animation-fill-mode: both;
-}
-
-.stats-card:nth-child(1) { animation-delay: 0.1s; }
-.stats-card:nth-child(2) { animation-delay: 0.2s; }
 
 @keyframes fadeInUp {
     from {
@@ -86,23 +269,68 @@
     }
 }
 
-/* Style pour la pagination */
-.paginate {
-    margin-top: 2rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+.stats-card {
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
 }
 
-.paginate button {
-    transition: all 0.3s ease;
+.stats-card:nth-child(1) { animation-delay: 0.1s; }
+.stats-card:nth-child(2) { animation-delay: 0.2s; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .text-center.mb-5.results-header {
+        padding: 1.5rem;
+        margin: 0.5rem 0 2rem;
+    }
+
+    .display-5 {
+        font-size: 2rem;
+    }
+
+    .text-muted.lead {
+        font-size: 1rem;
+    }
+
+    .stats-card {
+        margin-bottom: 1rem;
+    }
+
+    .stats-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    .table td, .table th {
+        padding: 1rem;
+    }
+
+    .letter-badge {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .badge {
+        padding: 0.5rem 0.8rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+    }
 }
 
-.paginate button:hover {
-    background-color: #f8f9fa;
-}
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .result-row:hover {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(248, 249, 250, 0.05));
+    }
 
-.badge {
-    font-weight: 500;
-    letter-spacing: 0.3px;
+    .empty-state {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(248, 249, 250, 0.05));
+    }
+
+    .table td {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
 }

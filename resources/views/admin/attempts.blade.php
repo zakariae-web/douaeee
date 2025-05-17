@@ -38,7 +38,7 @@
         <div class="col-lg-10">
             <!-- Header Section avec animation -->
             <div class="text-center mb-5 results-header">
-                <h2 class="display-5 mb-3">📋 Tentatives de <strong>{{ $user->name }}</strong></h2>
+                <h2 class="display-5 mb-3">Tentatives de <strong>{{ $user->name }}</strong></h2>
                 <p class="text-muted lead">Historique détaillé des tentatives de l'utilisateur</p>
                 <div class="mt-4">
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary btn-lg px-4">

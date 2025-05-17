@@ -1,0 +1,194 @@
+/* Custom properties */
+:root {
+    --primary-color: #4361ee;
+    --primary-dark: #3651d4;
+    --text-dark: #2c3e50;
+    --text-muted: #505d6b;
+    --background-light: #f8f9fa;
+    --card-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* Global styles */
+body {
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+/* Hero section enhancements */
+.min-vh-75 {
+    min-height: 85vh;
+    position: relative;
+    background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+}
+
+.display-4 {
+    font-weight: 800;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    background: linear-gradient(120deg, var(--text-dark), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+}
+
+.lead {
+    font-size: 1.35rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+}
+
+/* Enhanced button styles */
+.btn {
+    border-radius: 12px;
+    padding: 1rem 2.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+    border: none;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--text-muted);
+    color: var(--text-muted);
+    background: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--text-muted);
+    transform: translateY(-2px);
+}
+
+/* Image enhancements */
+.img-fluid {
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+}
+
+/* Cards refined styling */
+.card {
+    border: none;
+    border-radius: 20px;
+    background: white;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease;
+    overflow: hidden;
+}
+
+.card-img-top {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin: 1rem;
+}
+
+.card-body {
+    padding: 2.5rem;
+}
+
+.card .fa-3x {
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+}
+
+.card h3 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+/* Features section enhancement */
+#features {
+    background: linear-gradient(135deg, var(--background-light) 0%, #ffffff 100%);
+    padding: 6rem 0;
+    margin: 4rem 0;
+}
+
+#features h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: var(--text-dark);
+}
+
+/* Call to Action enhancement */
+.py-5 {
+    padding: 5rem 0;
+    background: linear-gradient(to right, rgba(67, 97, 238, 0.05), rgba(67, 97, 238, 0.1));
+    border-radius: 30px;
+    margin: 3rem 0;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+    
+    .lead {
+        font-size: 1.15rem;
+    }
+    
+    .card {
+        margin-bottom: 2rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .card-img-top {
+        height: 250px;
+    }
+    
+    #features {
+        padding: 4rem 0;
+    }
+}
+
+/* Additional spacing utilities */
+.gap-3 {
+    gap: 1rem;
+}
+
+/* Text enhancements */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+h2.text-center {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+h2.text-center::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+    border-radius: 2px;
+}

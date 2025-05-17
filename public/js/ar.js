@@ -9,10 +9,10 @@ const scene = new THREE.Scene();
 const skyGeometry = new THREE.SphereGeometry(50, 32, 32);
 const skyMaterial = new THREE.ShaderMaterial({
     uniforms: {
-        topColor: { value: new THREE.Color(0x87CEEB) },  // Bleu ciel
-        bottomColor: { value: new THREE.Color(0xFFFFFF) },  // Blanc
-        offset: { value: 20 },
-        exponent: { value: 0.6 }
+        topColor: { value: new THREE.Color(0x7EC0EE) },  // Lighter, more soothing blue
+        bottomColor: { value: new THREE.Color(0xE6F3FF) },  // Very light blue-white
+        offset: { value: 33 },  // Increased for smoother transition
+        exponent: { value: 0.8 }  // Increased for more gradual gradient
     },
     vertexShader: `
         varying vec3 vWorldPosition;
@@ -30,7 +30,8 @@ const skyMaterial = new THREE.ShaderMaterial({
         varying vec3 vWorldPosition;
         void main() {
             float h = normalize(vWorldPosition + offset).y;
-            gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h, 0.0), exponent), 0.0)), 1.0);
+            float t = max(pow(max(h, 0.0), exponent), 0.0);
+            gl_FragColor = vec4(mix(bottomColor, topColor, t), 1.0);
         }
     `,
     side: THREE.BackSide
@@ -43,6 +44,9 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
 const container = document.getElementById("ar-container");
 const containerWidth = container.clientWidth;
 const containerHeight = container.clientHeight;
@@ -57,10 +61,10 @@ document.getElementById("ar-container").appendChild(renderer.domElement);
 camera.position.set(0.4, 2, -10);
 
 // 💡 Ajout des lumières
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
 directionalLight.position.set(5, 8, 5);
 directionalLight.castShadow = true;
 directionalLight.shadow.camera.near = 0.1;
@@ -71,7 +75,13 @@ directionalLight.shadow.camera.top = 10;
 directionalLight.shadow.camera.bottom = -10;
 directionalLight.shadow.mapSize.width = 2048;
 directionalLight.shadow.mapSize.height = 2048;
+directionalLight.shadow.bias = -0.001;
 scene.add(directionalLight);
+
+// Add a subtle fill light from the opposite side
+const fillLight = new THREE.DirectionalLight(0x9090ff, 0.3);
+fillLight.position.set(-5, 3, -5);
+scene.add(fillLight);
 
 // 🎮 Contrôles de la caméra
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -161,6 +171,89 @@ function createGrassField() {
         grassGroup.add(tuft);
     }
 
+    // Ajout de fleurs
+    const flowerColors = [
+        0xFF69B4, // Rose
+        0xFFFF00, // Jaune
+        0xFF0000, // Rouge
+        0x9932CC, // Violet
+        0xFFFFFF  // Blanc
+    ];
+
+    // Création de fleurs
+    for (let i = 0; i < 40; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 10;
+        
+        // Création du centre de la fleur
+        const centerGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+        const centerMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0xFFD700,
+            metalness: 0.1,
+            roughness: 0.8
+        });
+        const flowerCenter = new THREE.Mesh(centerGeometry, centerMaterial);
+        
+        // Groupe pour la fleur complète
+        const flower = new THREE.Group();
+        flower.add(flowerCenter);
+        
+        // Couleur aléatoire pour les pétales
+        const petalColor = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+        
+        // Création des pétales
+        const petalCount = 5;
+        for (let j = 0; j < petalCount; j++) {
+            const petalGeometry = new THREE.ConeGeometry(0.04, 0.12, 3);
+            const petalMaterial = new THREE.MeshPhysicalMaterial({
+                color: petalColor,
+                metalness: 0.1,
+                roughness: 0.8,
+                side: THREE.DoubleSide
+            });
+            const petal = new THREE.Mesh(petalGeometry, petalMaterial);
+            
+            // Position et rotation des pétales
+            petal.rotation.x = Math.PI / 2;
+            petal.position.y = 0.06;
+            petal.rotation.y = (j / petalCount) * Math.PI * 2;
+            petal.position.z = 0.06;
+            
+            const petalGroup = new THREE.Group();
+            petalGroup.add(petal);
+            petalGroup.rotation.y = (j / petalCount) * Math.PI * 2;
+            
+            flower.add(petalGroup);
+        }
+        
+        // Tige de la fleur
+        const stemGeometry = new THREE.CylinderGeometry(0.01, 0.01, 0.3, 4);
+        const stemMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0x228B22,
+            metalness: 0,
+            roughness: 0.8
+        });
+        const stem = new THREE.Mesh(stemGeometry, stemMaterial);
+        stem.position.y = -0.15;
+        flower.add(stem);
+        
+        // Position de la fleur complète
+        flower.position.set(
+            Math.cos(angle) * radius,
+            -0.75,
+            Math.sin(angle) * radius
+        );
+        
+        // Rotation aléatoire
+        flower.rotation.y = Math.random() * Math.PI * 2;
+        flower.rotation.z = (Math.random() - 0.5) * 0.2;
+        
+        flower.castShadow = true;
+        flower.receiveShadow = true;
+        
+        grassGroup.add(flower);
+    }
+
     return grassGroup;
 }
 
@@ -205,7 +298,7 @@ function animate() {
     time += windSpeed;
     if (time % 0.1 < 0.001) {
         grassField.children.forEach((blade, index) => {
-            if (blade.geometry.type === 'ConeGeometry') {
+            if (blade.geometry && blade.geometry.type === 'ConeGeometry') {
                 const windEffect = Math.sin(time + index * 0.2) * windStrength;
                 blade.rotation.x = blade.userData.originalRotationX + windEffect;
             }
@@ -234,7 +327,7 @@ function animate() {
 
 // Sauvegarde des rotations initiales de l'herbe
 grassField.children.forEach(blade => {
-    if (blade.geometry.type === 'ConeGeometry') {
+    if (blade.geometry && blade.geometry.type === 'ConeGeometry') {
         blade.userData.originalRotationX = blade.rotation.x;
     }
 });

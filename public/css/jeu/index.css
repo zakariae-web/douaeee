@@ -184,3 +184,76 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+/* Header Section Styles */
+.text-center.mb-4 {
+    padding: 2rem 0;
+    position: relative;
+    margin-bottom: 3rem !important;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.display-5 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.display-5::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2c3e50);
+    border-radius: 2px;
+}
+
+.lead.text-muted {
+    font-size: 1.2rem;
+    color: #6c757d !important;
+    max-width: 600px;
+    margin: 1.5rem auto 0;
+    padding: 0 1rem;
+    line-height: 1.6;
+}
+
+/* Animation pour le header */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.text-center.mb-4 {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Responsive adjustments for header */
+@media (max-width: 768px) {
+    .text-center.mb-4 {
+        padding: 1.5rem 0;
+    }
+
+    .display-5 {
+        font-size: 2rem;
+    }
+
+    .lead.text-muted {
+        font-size: 1rem;
+    }
+}

@@ -37,7 +37,7 @@
         <div class="col-lg-10">
             <!-- Header Section avec animation -->
             <div class="text-center mb-5 results-header">
-                <h2 class="display-5 mb-3">📊 Historique des Tentatives</h2>
+                <h2 class="display-5 mb-3">Historique des Tentatives</h2>
                 <p class="text-muted lead">Suivez votre progression et vos performances</p>
             </div>
 
