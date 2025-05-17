@@ -290,5 +290,7 @@
     <script type="module" src="{{ asset('js/ar.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="{{ asset('js/speech.js') }}"  type="module"></script>
+    <script src="{{ asset('js/game/index.js') }}"></script>
+    <script src="{{ asset('js/admin/dashboard.js') }}"></script>
 </body>
 </html>
