@@ -90,7 +90,6 @@
                             <table class="table table-hover mb-0">
                                 <thead>
                                     <tr class="bg-light">
-                                        <th class="px-4 py-3">#</th>
                                         <th class="px-4 py-3">Lettre attendue</th>
                                         <th class="px-4 py-3">Lettre prononcée</th>
                                         <th class="px-4 py-3">Résultat</th>
@@ -100,7 +99,6 @@
                                 <tbody>
                                     @foreach ($attempts as $index => $attempt)
                                         <tr class="result-row">
-                                            <td class="px-4 py-3">{{ $index + 1 }}</td>
                                             <td class="px-4 py-3">
                                                 <span class="letter-badge">{{ $attempt->letter }}</span>
                                             </td>

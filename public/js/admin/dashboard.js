@@ -1,5 +1,6 @@
-
-    document.getElementById('searchStudent').addEventListener('input', function(e) {
+const searchStudent = document.getElementById('searchStudent');
+if (searchStudent) {
+    searchStudent.addEventListener('input', function(e) {
         const searchText = e.target.value.toLowerCase();
         const rows = document.querySelectorAll('tbody tr');
         
@@ -14,3 +15,4 @@
             }
         });
     });
+}
