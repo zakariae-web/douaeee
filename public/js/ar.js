@@ -221,9 +221,6 @@ function animate() {
             Math.sin(letterMesh.userData.time) * letterMesh.userData.floatAmplitude;
         letterMesh.position.y = floatY;
 
-        // Rotation subtile
-        letterMesh.rotation.y += letterMesh.userData.rotationSpeed;
-
         // Mise à jour du glow
         if (letterMesh.children[1]) {
             letterMesh.children[1].material.uniforms.viewVector.value = 
@@ -427,7 +424,6 @@ function loadLetter(letter) {
         letterGroup.userData.initialY = 1;
         letterGroup.userData.floatSpeed = 0.002;
         letterGroup.userData.floatAmplitude = 0.1;
-        letterGroup.userData.rotationSpeed = 0.001;
         letterGroup.userData.time = Math.random() * Math.PI * 2;
 
         scene.add(letterGroup);
