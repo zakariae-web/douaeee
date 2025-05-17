@@ -1,5 +1,33 @@
 @extends('layouts.app')
 
+@section('header')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/favicon/site.webmanifest" />
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/admin/attempts.css">
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
+@endsection
 @section('title', "Tentatives de {$user->name}")
 
 @section('content')
@@ -133,116 +161,6 @@
     </div>
 </div>
 
-<style>
-.results-header {
-    animation: fadeInDown 0.5s ease-out;
-}
-
-.stats-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px;
-}
-
-.stats-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-}
-
-.stats-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    background: rgba(var(--bs-success-rgb), 0.1);
-}
-
-.stats-card:nth-child(2) .stats-icon {
-    background: rgba(var(--bs-danger-rgb), 0.1);
-}
-
-.letter-badge {
-    background: linear-gradient(45deg, #2196F3, #0D47A1);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-.result-row {
-    transition: background-color 0.2s ease;
-}
-
-.result-row:hover {
-    background-color: rgba(0,0,0,0.02);
-}
-
-.empty-state {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-radius: 20px;
-    padding: 3rem;
-}
-
-.empty-state-icon {
-    color: #6c757d;
-    opacity: 0.5;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Animation pour les cartes de statistiques */
-.stats-card {
-    animation: fadeInUp 0.5s ease-out;
-    animation-fill-mode: both;
-}
-
-.stats-card:nth-child(1) { animation-delay: 0.1s; }
-.stats-card:nth-child(2) { animation-delay: 0.2s; }
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Style pour la pagination */
-.paginate {
-    margin-top: 2rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.paginate button {
-    transition: all 0.3s ease;
-}
-
-.paginate button:hover {
-    background-color: #f8f9fa;
-}
-
-.badge {
-    font-weight: 500;
-    letter-spacing: 0.3px;
-}
-</style>
 
 <script>
     const countPage = {{ $attempts->lastPage() }};

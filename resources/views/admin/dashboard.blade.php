@@ -1,5 +1,32 @@
 @extends('layouts.app')
+@section('header')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/favicon/site.webmanifest" />
+    
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/admin/dashboard.css">
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
+@endsection
 @section('title', 'Tableau de bord enseignant')
 
 @section('content')
@@ -137,70 +164,7 @@
     </div>
 </div>
 
-<style>
-.avatar-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-}
 
-.bg-soft-primary {
-    background-color: rgba(52, 144, 220, 0.1);
-}
-
-.table th {
-    font-weight: 600;
-    font-size: 0.875rem;
-}
-
-.table td {
-    font-size: 0.875rem;
-}
-
-.card {
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.form-control:focus {
-    border-color: #3490dc;
-    box-shadow: 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
-}
-
-.input-group-text {
-    border-radius: 10px 0 0 10px;
-}
-
-.form-control {
-    border-radius: 0 10px 10px 0;
-}
-
-.btn-outline-primary {
-    border-width: 2px;
-}
-
-.btn-outline-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(52, 144, 220, 0.2);
-}
-
-@media (max-width: 768px) {
-    .avatar-circle {
-        width: 35px;
-        height: 35px;
-        font-size: 12px;
-    }
-    
-    .table td, .table th {
-        padding: 0.75rem;
-    }
-}
-</style>
 
 <script>
     const countPage = {{ $users->lastPage() }};

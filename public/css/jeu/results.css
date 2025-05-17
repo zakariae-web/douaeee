@@ -1,0 +1,113 @@
+.results-header {
+    animation: fadeInDown 0.5s ease-out;
+}
+
+.stats-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.stats-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+.stats-card:nth-child(2) .stats-icon {
+    background: rgba(var(--bs-danger-rgb), 0.1);
+}
+
+.stats-card:nth-child(3) .stats-icon {
+    background: rgba(var(--bs-warning-rgb), 0.1);
+}
+
+.letter-badge {
+    background: linear-gradient(45deg, #2196F3, #0D47A1);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.result-row {
+    transition: background-color 0.2s ease;
+}
+
+.result-row:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+.empty-state {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    padding: 3rem;
+}
+
+.empty-state-icon {
+    color: #6c757d;
+    opacity: 0.5;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation pour les cartes de statistiques */
+.stats-card {
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.stats-card:nth-child(1) { animation-delay: 0.1s; }
+.stats-card:nth-child(2) { animation-delay: 0.2s; }
+.stats-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style pour la pagination */
+.paginate {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.paginate button {
+    transition: all 0.3s ease;
+}
+
+.paginate button:hover {
+    background-color: #f8f9fa;
+}
+
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}

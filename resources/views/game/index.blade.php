@@ -1,5 +1,32 @@
 @extends('layouts.app')
+@section('header')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/favicon/site.webmanifest" />
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/jeu/index.css">
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+</head>
+@endsection
 @section('title', 'Jeu de Prononciation')
 
 @section('content')
@@ -61,147 +88,5 @@
             </div>
         </div>
     </div>
-
-    <style>
-    .instruction-box {
-        background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
-        border: 1px solid #dee2e6;
-    }
-    
-    .ar-wrapper {
-        position: relative;
-        transition: all 0.3s ease;
-    }
-    
-    .ar-wrapper:hover {
-        transform: scale(1.01);
-    }
-    
-    .btn {
-        transition: all 0.3s ease;
-        min-width: 200px;
-    }
-    
-    .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    
-    /* Styles améliorés pour le conteneur de résultat */
-    #result-container {
-        perspective: 1000px;
-    }
-
-    .custom-alert {
-        display: flex;
-        align-items: center;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 1rem;
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transform-origin: top;
-        animation: slideIn 0.3s ease-out;
-        background: white;
-    }
-
-    .result-icon-wrapper {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        margin-right: 1rem;
-    }
-
-    .result-icon {
-        font-size: 24px;
-        animation: scaleIn 0.3s ease-out;
-    }
-
-    .result-content {
-        flex: 1;
-        text-align: left;
-    }
-
-    .pronunciation-text {
-        font-size: 0.9rem;
-        opacity: 0.8;
-    }
-
-    .custom-alert.alert-success {
-        background: linear-gradient(145deg, #ffffff, #d4edda);
-        border-left: 4px solid #28a745;
-    }
-
-    .custom-alert.alert-success .result-icon-wrapper {
-        background-color: rgba(40, 167, 69, 0.1);
-        color: #28a745;
-    }
-    
-    .custom-alert.alert-danger {
-        background: linear-gradient(145deg, #ffffff, #f8d7da);
-        border-left: 4px solid #dc3545;
-    }
-
-    .custom-alert.alert-danger .result-icon-wrapper {
-        background-color: rgba(220, 53, 69, 0.1);
-        color: #dc3545;
-    }
-
-    .btn-close {
-        opacity: 0.5;
-        transition: opacity 0.2s;
-    }
-
-    .btn-close:hover {
-        opacity: 1;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(-20px) rotateX(-10deg);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
-        }
-    }
-
-    @keyframes scaleIn {
-        from {
-            transform: scale(0);
-        }
-        to {
-            transform: scale(1);
-        }
-    }
-
-    /* Ajout d'une animation de disparition */
-    .custom-alert.fade-out {
-        animation: slideOut 0.3s ease-in forwards;
-    }
-
-    @keyframes slideOut {
-        from {
-            opacity: 1;
-            transform: translateY(0) rotateX(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateY(-20px) rotateX(10deg);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .btn {
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-    }
-    </style>
 
 @endsection
