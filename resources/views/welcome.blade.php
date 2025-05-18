@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <img src="{{ asset('images/hero-vr.png') }}" alt="Illustration" class="img-fluid">
+            <img src="{{ asset('images/hero-vr.png') }}" alt="Illustration" class="img-fluid" loading="lazy">
         </div>
     </div>
 
@@ -50,7 +50,7 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{{ asset('images/vr-learning.jpg') }}" style="height:400px" class="card-img-top p-3" alt="Apprentissage VR">
+                    <img src="{{ asset('images/vr-learning.jpg') }}" style="height:400px" class="card-img-top p-3" alt="Apprentissage VR" loading="lazy">
                     <div class="card-body text-center">
                         <i class="fas fa-vr-cardboard fa-3x text-primary mb-3"></i>
                         <h3 class="h5">Apprentissage Immersif</h3>
@@ -60,7 +60,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{{ asset('images/personalized-exercises.jpg') }}" style="height:400px" class="card-img-top p-3" alt="Exercices Personnalisés">
+                    <img src="{{ asset('images/personalized-exercises.jpg') }}" style="height:400px" class="card-img-top p-3" alt="Exercices Personnalisés" loading="lazy">
                     <div class="card-body text-center">
                         <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
                         <h3 class="h5">Exercices Personnalisés</h3>
@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{{ asset('images/progress-tracking.jpg') }}" style="height:400px" class="card-img-top p-3" alt="Suivi des Progrès">
+                    <img src="{{ asset('images/progress-tracking.jpg') }}" style="height:400px" class="card-img-top p-3" alt="Suivi des Progrès" loading="lazy">
                     <div class="card-body text-center">
                         <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
                         <h3 class="h5">Suivi des Progrès</h3>
