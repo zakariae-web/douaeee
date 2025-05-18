@@ -36,47 +36,64 @@
         </div>
     </div>
 
-    <div class="row g-4">
         @if(Auth::user()->role !== 'teacher')
         <!-- Options pour les étudiants -->
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm hover-card">
-                <div class="card-body text-center p-5">
-                    <img src="{{ asset('images/vr-learning.jpg') }}" alt="Commencer l'apprentissage" class="img-fluid mb-4" style="max-height: 200px;">
+    <div class="student-cards-container">
+        <div class="student-card-wrapper">
+            <div class="card border-0 shadow-sm hover-card student-card">
+                <div class="card-body d-flex flex-column align-items-center p-4">
+                    <div class="card-image-wrapper mb-4">
+                        <img src="{{ asset('images/vr-learning.jpg') }}" alt="Commencer l'apprentissage" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="card-content text-center">
                     <h3 class="h4 mb-3">Commencer l'Apprentissage</h3>
                     <p class="text-muted mb-4">Plongez dans un environnement virtuel immersif pour améliorer votre prononciation de manière interactive et amusante.</p>
                     <a href="{{ route('jeu') }}" class="btn btn-primary btn-lg">Commencer</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm hover-card">
-                <div class="card-body text-center p-5">
-                    <img src="{{ asset('images/progress-tracking.jpg') }}" alt="Mes tentatives" class="img-fluid mb-4" style="max-height: 200px;">
+        <div class="student-card-wrapper">
+            <div class="card border-0 shadow-sm hover-card student-card">
+                <div class="card-body d-flex flex-column align-items-center p-4">
+                    <div class="card-image-wrapper mb-4">
+                        <img src="{{ asset('images/progress-tracking.jpg') }}" alt="Mes tentatives" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="card-content text-center">
                     <h3 class="h4 mb-3">Mes Tentatives</h3>
                     <p class="text-muted mb-4">Consultez votre historique d'apprentissage et suivez vos progrès au fil du temps.</p>
                     <a href="{{ route('results') }}" class="btn btn-outline-primary btn-lg">Voir mes résultats</a>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
         @else
         <!-- Options pour l'enseignant -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-5">
-                        <img src="{{ asset('images/progress-tracking.jpg') }}" style="height: 250px" alt="Dashboard Enseignant" class="img-fluid mb-4" style="max-height: 200px;">
+    <div class="student-cards-container">
+        <div class="student-card-wrapper">
+            <div class="card border-0 shadow-sm hover-card student-card">
+                <div class="card-body d-flex flex-column align-items-center p-4">
+                    <div class="card-image-wrapper mb-4">
+                        <img src="{{ asset('images/progress-tracking.jpg') }}" alt="Dashboard Enseignant" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="card-content text-center">
                         <h3 class="h4 mb-3">Dashboard Enseignant</h3>
                         <p class="text-muted mb-4">Accédez au tableau de bord pour suivre les progrès de vos élèves et gérer leurs apprentissages.</p>
                         <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-lg">Accéder au Dashboard</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-sm hover-card">
-                    <div class="card-body text-center p-5">
-                        <img src="{{ asset('images/letters-management.jpg') }}" style="height: 250px" alt="Gestion des Lettres" class="img-fluid mb-4" style="max-height: 200px;">
+        </div>
+
+        <div class="student-card-wrapper">
+            <div class="card border-0 shadow-sm hover-card student-card">
+                <div class="card-body d-flex flex-column align-items-center p-4">
+                    <div class="card-image-wrapper mb-4">
+                        <img src="{{ asset('images/letters-management.jpg') }}" alt="Gestion des Lettres" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="card-content text-center">
                         <h3 class="h4 mb-3">Gestion des Lettres</h3>
                         <p class="text-muted mb-4">Gérez les lettres et leurs fichiers audio pour l'apprentissage des élèves.</p>
                         <a href="{{ route('admin.letters.index') }}" class="btn btn-primary btn-lg">Gérer les Lettres</a>
@@ -84,8 +101,8 @@
                 </div>
             </div>
         </div>
-        @endif
     </div>
+    @endif
 
     <!-- Statistiques ou informations supplémentaires -->
     <div class="row mt-5">

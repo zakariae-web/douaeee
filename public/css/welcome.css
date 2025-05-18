@@ -32,6 +32,7 @@ body {
     line-height: 1.2;
     background: linear-gradient(120deg, var(--text-dark), var(--primary-color));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 2rem;
 }
