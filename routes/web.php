@@ -61,11 +61,11 @@ Route::get('/letters', function (Request $request) {
 Route::post('/attempt', [PronunciationController::class, 'store'])->middleware('auth');
 
 Route::get('/results', function () {
-    $attempts = PronunciationAttempt::where('user_id', Auth::id())->latest()->paginate(10);
+        $attempts = PronunciationAttempt::where('user_id', Auth::id())->latest()->paginate(10);
     return view('game.results', compact('attempts'));
-})->name('results');
+})->middleware('auth')->name('results');
 
-Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('admin.dashboard');
+Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->middleware('auth')->name('admin.dashboard');
 Route::get('/admin/user/{id}/attempts', [TeacherDashboardController::class, 'showUserAttempts'])->name('admin.user.attempts');
 
 // Routes pour la gestion des lettres (admin)
