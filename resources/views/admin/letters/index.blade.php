@@ -174,8 +174,33 @@
                         
                     </div>
 
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $letters->links('pagination::bootstrap-5') }}
+                    <div class="mt-4">
+                        <div class="paginate">
+                            <button class="prevBtn" onclick="window.location.href='{{ $letters->previousPageUrl() }}'" {{ $letters->onFirstPage() ? 'disabled' : '' }}>
+                                <i class="fas fa-chevron-left me-2"></i>
+                                <span class="prevBtn-text">Précédent</span>
+                            </button>
+                            <div class="containerBtns">
+                                <div class="leftContainer">
+                                    @for($i = max(1, $letters->currentPage() - 2); $i < $letters->currentPage(); $i++)
+                                        <button onclick="window.location.href='{{ $letters->url($i) }}'">{{ $i }}</button>
+                                    @endfor
+                                </div>
+                                <button class="activeBtn">{{ $letters->currentPage() }}</button>
+                                <div class="rightContainer">
+                                    @for($i = $letters->currentPage() + 1; $i <= min($letters->lastPage(), $letters->currentPage() + 2); $i++)
+                                        <button onclick="window.location.href='{{ $letters->url($i) }}'">{{ $i }}</button>
+                                    @endfor
+                                </div>
+                            </div>
+                            <button class="nextBtn" onclick="window.location.href='{{ $letters->nextPageUrl() }}'" {{ !$letters->hasMorePages() ? 'disabled' : '' }}>
+                                <span class="nextBtn-text">Suivant</span>
+                                <i class="fas fa-chevron-right ms-2"></i>
+                            </button>
+                        </div>
+                        <div class="paginate-details text-center mt-3 text-muted">
+                            Page <span class="fw-bold text-primary">{{ $letters->currentPage() }}</span> sur <span class="fw-bold">{{ $letters->lastPage() }}</span> — Total : <span class="fw-bold">{{ $letters->total() }}</span> lettres
+                        </div>
                     </div>
                 </div>
             </div>
