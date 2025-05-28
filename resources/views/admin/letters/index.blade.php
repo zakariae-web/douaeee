@@ -168,9 +168,23 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    
-                                    <!-- Modal Modification pour {{ $letter->letter }} -->
-                                    <div class="modal fade" id="editLetterModal-{{ $letter->id }}" tabindex="-1" aria-hidden="true">
+                         @endforeach
+                            </tbody>
+                        </table>
+                        
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-4">
+                        {{ $letters->links('pagination::bootstrap-5') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach($letters as $letter)
+<div class="modal fade" id="editLetterModal-{{ $letter->id }}" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -222,19 +236,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="d-flex justify-content-center mt-4">
-                        {{ $letters->links('pagination::bootstrap-5') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                    @endforeach
 
 <!-- Modal Ajout -->
 <div class="modal fade" id="addLetterModal" tabindex="-1" aria-hidden="true">
