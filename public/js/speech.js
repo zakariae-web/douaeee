@@ -26,6 +26,47 @@ window.onload = function () {
         audio.play();
     }
 
+    function showProgressionNotification(progression) {
+        if (!progression) return;
+
+        const notification = document.createElement('div');
+        notification.className = 'progression-notification';
+        if (progression.leveled_up) {
+            notification.classList.add('level-up');
+        }
+
+        const content = `
+            <div class="notification-content">
+                <div class="notification-icon">
+                    <i class="fas ${progression.leveled_up ? 'fa-star' : 'fa-plus-circle'}"></i>
+                </div>
+                <div class="notification-text">
+                    ${progression.leveled_up 
+                        ? `<h3>Niveau ${progression.new_level} atteint !</h3>
+                           <p class="level-up-text">Félicitations !</p>`
+                        : `<p>+${progression.xp_gained} XP</p>`
+                    }
+                </div>
+            </div>
+        `;
+
+        notification.innerHTML = content;
+        document.body.appendChild(notification);
+
+        // Animation d'entrée
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+
+        // Supprimer la notification après 3 secondes
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+
     function fetchNextLetter() {
         fetch(`/letters?stage_id=${currentStageId}`)
             .then(response => response.json())
@@ -95,6 +136,9 @@ window.onload = function () {
                 console.log("Tentative enregistrée :", data);
                 if (isCorrect) {
                     showModalMessage(`Bravo ! Vous avez correctement prononcé "${spokenWord}" !`, true, spokenWord);
+                    if (data.progression) {
+                        showProgressionNotification(data.progression);
+                    }
                     setTimeout(() => fetchNextLetter(), 1000);
                 } else {
                     showModalMessage(`Ce n'est pas correct. Vous avez dit "${spokenWord}". Essayez encore !`, false, spokenWord);

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Services\UserProgressionService;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'xp',
+        'level',
+        'role'
     ];
 
     /**
@@ -43,11 +47,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'xp' => 'integer',
+            'level' => 'integer'
         ];
     }
-    public function pronunciationAttempts()
-{
-    return $this->hasMany(PronunciationAttempt::class);
-}
 
+    public function pronunciationAttempts()
+    {
+        return $this->hasMany(PronunciationAttempt::class);
+    }
+
+    public function addXp(bool $isWord = false): array
+    {
+        $progressionService = app(UserProgressionService::class);
+        return $progressionService->addXp($this, $isWord);
+    }
+
+    public function getProgressionInfo(): array
+    {
+        $progressionService = app(UserProgressionService::class);
+        return $progressionService->getProgressionInfo($this);
+    }
 }

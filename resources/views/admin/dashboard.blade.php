@@ -91,7 +91,19 @@
                             </th>
                             <th class="border-0 px-4 py-3">
                                 <div class="d-flex align-items-center">
+                                    <i class="fas fa-trophy text-primary me-2"></i>
+                                    Niveau
+                                </div>
+                            </th>
+                            <th class="border-0 px-4 py-3">
+                                <div class="d-flex align-items-center">
                                     <i class="fas fa-chart-bar text-primary me-2"></i>
+                                    XP
+                                </div>
+                            </th>
+                            <th class="border-0 px-4 py-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-microphone text-primary me-2"></i>
                                     Tentatives
                                 </div>
                             </th>
@@ -113,6 +125,22 @@
                                 </td>
                                 <td class="px-4 py-3 text-muted">{{ $user->email }}</td>
                                 <td class="px-4 py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="level-badge bg-soft-primary text-primary rounded-pill px-3 py-1">
+                                            <i class="fas fa-trophy me-2"></i>
+                                            Niveau {{ $user->level }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="xp-badge bg-soft-success text-success rounded-pill px-3 py-1">
+                                            <i class="fas fa-star me-2"></i>
+                                            {{ $user->xp }} XP
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">
                                     <span class="badge bg-soft-primary text-primary rounded-pill">
                                         {{ $user->pronunciation_attempts_count }} tentatives
                                     </span>
@@ -127,7 +155,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center py-5">
+                                <td colspan="6" class="text-center py-5">
                                     <div class="text-muted">
                                         <i class="fas fa-users fa-3x mb-3"></i>
                                         <p>Aucun étudiant trouvé.</p>

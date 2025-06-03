@@ -257,3 +257,56 @@
         font-size: 1rem;
     }
 }
+
+/* Styles pour les notifications de progression */
+.progression-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    min-width: 300px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease-out;
+}
+
+.progression-notification.show {
+    transform: translateX(0);
+}
+
+.progression-notification.level-up {
+    background: #4CAF50;
+    color: white;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.notification-icon {
+    font-size: 2rem;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-text h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.notification-text p {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+}
+
+.level-up-text {
+    opacity: 0.9;
+}
