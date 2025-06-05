@@ -73,6 +73,14 @@
                                         <i class="fas fa-history me-2"></i>
                                         Mes tentatives
                                     </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-graduation-cap me-2"></i>
+                                        Niveau : {{ Auth::user()->level ?? 'Débutant' }}
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-star me-2"></i>
+                                        Score : {{ Auth::user()->xp ?? 0 }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('home') }}">
                                         <i class="fas fa-home me-2"></i>
                                         Home
